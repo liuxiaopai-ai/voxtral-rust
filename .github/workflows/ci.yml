@@ -33,5 +33,9 @@ jobs:
       - name: test
         run: cargo test --all-targets
 
+      - name: optional model smoke
+        if: ${{ env.VOXTRAL_MODEL_DIR != '' }}
+        run: cargo test -p voxtral --test e2e_model_env -- --nocapture
+
       - name: build (release)
         run: cargo build --all-targets --release
