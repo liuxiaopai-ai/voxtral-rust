@@ -29,6 +29,7 @@ Status: active implementation (frontend + model asset loading + streaming schedu
 - Streaming alignment core:
   - Incremental conv stem with boundary-correct overlap logic
   - Prompt/flush scheduling helpers (`[BOS] + [STREAMING_PAD]...`, right-pad flush)
+  - `PipelineState` for adapter-token/decoding-budget tracking
 - Model assets:
   - `params.json` parser and validation
   - `tekken.json` decode-only tokenizer loader

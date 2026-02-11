@@ -13,6 +13,7 @@ pub mod math;
 pub mod mel;
 pub mod model;
 pub mod params;
+pub mod pipeline;
 pub mod stream;
 pub mod tokenizer;
 pub mod weights;
