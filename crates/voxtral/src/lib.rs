@@ -8,7 +8,14 @@
 pub mod audio;
 pub mod constants;
 pub mod conv;
+pub mod kv;
+pub mod math;
 pub mod mel;
+pub mod model;
+pub mod params;
+pub mod stream;
+pub mod tokenizer;
+pub mod weights;
 
 /// A simple placeholder error type used until we settle module boundaries.
 #[derive(Debug, Clone, PartialEq, Eq)]

@@ -14,6 +14,7 @@ use voxtral::audio::{
 };
 use voxtral::constants::SAMPLE_RATE_HZ;
 use voxtral::mel::MelCtx;
+use voxtral::model::{ModelBundle, ModelMetadata};
 
 #[derive(Debug, Parser)]
 #[command(name = "voxtral")]
@@ -31,6 +32,18 @@ struct Args {
     #[arg(long, default_value_t = false)]
     from_mic: bool,
 
+    /// Model directory with params.json / tekken.json / consolidated.safetensors.
+    #[arg(long)]
+    model_dir: Option<PathBuf>,
+
+    /// Validate model metadata (and optionally weights) without running transcription.
+    #[arg(long, default_value_t = false)]
+    inspect_model: bool,
+
+    /// When used with --inspect-model, also validate consolidated.safetensors header.
+    #[arg(long, default_value_t = false)]
+    inspect_weights: bool,
+
     /// Seconds between frontend processing reports (debug).
     #[arg(long, default_value_t = 1.0)]
     report_every: f32,
@@ -38,6 +51,14 @@ struct Args {
 
 fn main() -> Result<()> {
     let args = Args::parse();
+
+    if args.inspect_model {
+        let model_dir = args
+            .model_dir
+            .as_ref()
+            .context("--inspect-model requires --model-dir")?;
+        return inspect_model(model_dir, args.inspect_weights);
+    }
 
     let modes = u32::from(args.audio.is_some()) + u32::from(args.stdin) + u32::from(args.from_mic);
     if modes != 1 {
@@ -53,6 +74,32 @@ fn main() -> Result<()> {
     }
 
     run_mic(Duration::from_secs_f32(args.report_every.max(0.1)))
+}
+
+fn inspect_model(model_dir: &PathBuf, inspect_weights: bool) -> Result<()> {
+    let meta = ModelMetadata::load_from_dir(model_dir).context("load model metadata")?;
+    let prompt = meta.tokenizer.default_prompt_ids().unwrap_or_default();
+    eprintln!(
+        "model ok: decoder_dim={} decoder_layers={} encoder_dim={} encoder_layers={} vocab_size={} prompt_len={}",
+        meta.params.dim,
+        meta.params.n_layers,
+        meta.params.multimodal.whisper_model_args.encoder_args.dim,
+        meta.params
+            .multimodal
+            .whisper_model_args
+            .encoder_args
+            .n_layers,
+        meta.params.vocab_size,
+        prompt.len()
+    );
+
+    if inspect_weights {
+        let bundle =
+            ModelBundle::load_from_dir(model_dir).context("load model bundle with weights")?;
+        let names = bundle.weights.names().context("list tensor names")?;
+        eprintln!("weights ok: tensor_count={}", names.len());
+    }
+    Ok(())
 }
 
 fn run_file(path: &PathBuf) -> Result<()> {

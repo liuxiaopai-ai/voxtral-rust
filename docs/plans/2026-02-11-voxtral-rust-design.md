@@ -92,3 +92,26 @@ This validates attention/RMSNorm/RoPE/FFN correctness without huge weights.
 ## Packaging (later)
 
 - Add `cargo-dist` for release artifacts when the CLI is stable.
+
+## Progress Update (2026-02-11)
+
+Implemented in this repository:
+
+- Audio frontend building blocks and tests:
+  - Resampling, WAV parsing, incremental log-mel
+  - Cross-platform microphone capture via `cpal` with drop-oldest backpressure
+- Incremental conv stem implementation with regression tests against offline behavior
+- Streaming schedule helpers:
+  - Prompt construction `[BOS] + [STREAMING_PAD] * (left_pad + delay)`
+  - Final flush padding formula (token-boundary align + right-pad budget)
+- Model asset loading primitives:
+  - `params.json` parser/validation
+  - `tekken.json` tokenizer loader (decode path)
+  - `safetensors` mmap loader with BF16/F32 conversion
+- Optional local E2E smoke test gated by `VOXTRAL_MODEL_DIR`
+
+Remaining major milestones:
+
+- Full encoder + adapter + decoder forward pass
+- Rolling decoder generation loop wired to audio stream
+- Performance backends (optimized CPU path, optional Metal backend)
