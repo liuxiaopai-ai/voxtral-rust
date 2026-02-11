@@ -34,6 +34,9 @@ Status: active implementation (frontend + model asset loading + streaming schedu
   - `params.json` parser and validation
   - `tekken.json` decode-only tokenizer loader
   - `safetensors` mmap loader with BF16/F32 conversion helpers
+- Inference primitives:
+  - RMSNorm / RoPE / Softmax helpers
+  - Linear op and GQA attention step with reference parity tests
 - CI:
   - GitHub Actions matrix on Linux/macOS/Windows
   - `fmt`, `clippy -D warnings`, `test`, `build --release`

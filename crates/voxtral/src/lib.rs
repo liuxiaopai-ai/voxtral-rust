@@ -12,6 +12,7 @@ pub mod kv;
 pub mod math;
 pub mod mel;
 pub mod model;
+pub mod ops;
 pub mod params;
 pub mod pipeline;
 pub mod stream;
