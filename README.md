@@ -37,6 +37,7 @@ Status: active implementation (frontend + model asset loading + streaming schedu
 - Inference primitives:
   - RMSNorm / RoPE / Softmax helpers
   - Linear op and GQA attention step with reference parity tests
+  - Decoder single-step layer forward skeleton (attn + SwiGLU + rolling KV cache)
 - CI:
   - GitHub Actions matrix on Linux/macOS/Windows
   - `fmt`, `clippy -D warnings`, `test`, `build --release`

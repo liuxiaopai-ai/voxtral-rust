@@ -8,6 +8,7 @@
 pub mod audio;
 pub mod constants;
 pub mod conv;
+pub mod decoder;
 pub mod kv;
 pub mod math;
 pub mod mel;
