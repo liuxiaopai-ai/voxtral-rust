@@ -1,0 +1,22 @@
+[package]
+name = "voxtral"
+description = "Voxtral Realtime (Rust) - core library"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+anyhow = "1"
+base64 = "0.22"
+memmap2 = "0.9"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+safetensors = "0.4"
+bytemuck = { version = "1", features = ["derive"] }
+rayon = "1"

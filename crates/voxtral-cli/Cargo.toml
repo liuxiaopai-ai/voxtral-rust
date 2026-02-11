@@ -1,0 +1,18 @@
+[package]
+name = "voxtral-cli"
+description = "Voxtral Realtime (Rust) - CLI"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+cpal = "0.15"
+ctrlc = "3"
+crossbeam-channel = "0.5"
+voxtral = { path = "../voxtral" }

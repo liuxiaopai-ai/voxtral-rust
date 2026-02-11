@@ -1,0 +1,15 @@
+/target/
+**/*.rs.bk
+.DS_Store
+.vscode/
+.idea/
+
+# Optional local model directory (huge)
+/models/
+/voxtral-model/
+
+# Optional local audio fixtures
+/audio/
+
+# dist artifacts
+/dist/
