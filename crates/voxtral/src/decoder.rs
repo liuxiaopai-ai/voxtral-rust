@@ -26,7 +26,7 @@ impl DecoderConfig {
         anyhow::ensure!(self.n_kv_heads > 0, "n_kv_heads must be > 0");
         anyhow::ensure!(self.head_dim > 0, "head_dim must be > 0");
         anyhow::ensure!(
-            self.n_heads % self.n_kv_heads == 0,
+            self.n_heads.is_multiple_of(self.n_kv_heads),
             "n_heads must be divisible by n_kv_heads"
         );
         anyhow::ensure!(

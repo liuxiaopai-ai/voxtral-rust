@@ -77,7 +77,7 @@ mod tests {
         fn shape(&self) -> &[usize] {
             &self.shape
         }
-        fn data(&self) -> Cow<[u8]> {
+        fn data(&self) -> Cow<'_, [u8]> {
             Cow::Borrowed(&self.data)
         }
         fn data_len(&self) -> usize {

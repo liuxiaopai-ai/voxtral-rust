@@ -119,7 +119,7 @@ mod tests {
             &self.shape
         }
 
-        fn data(&self) -> Cow<[u8]> {
+        fn data(&self) -> Cow<'_, [u8]> {
             Cow::Borrowed(&self.data)
         }
 
